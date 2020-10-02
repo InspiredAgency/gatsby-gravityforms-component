@@ -3,6 +3,7 @@ import get from 'lodash/get'
 import React from 'react'
 
 import Captcha from '../../components/Captcha'
+import FileInput from '../../components/FileInput'
 import Html from '../../components/Html'
 import Input from '../../components/Input'
 import Multiselect from '../../components/Multiselect'
@@ -97,6 +98,18 @@ const FieldBuilder = ({
             case 'textarea':
                 return (
                     <Textarea
+                        errors={errors[inputName]}
+                        fieldData={fieldData}
+                        key={field.id}
+                        name={inputName}
+                        register={register}
+                        wrapClassName={inputWrapperClass}
+                        wrapId={wrapId}
+                    />
+                )
+            case 'fileupload':
+                return (
+                    <FileInput
                         errors={errors[inputName]}
                         fieldData={fieldData}
                         key={field.id}
