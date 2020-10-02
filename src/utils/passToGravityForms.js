@@ -40,11 +40,11 @@ export default async (singleForm, values, lambdaEndpoint) => {
         if (errorResponse.is_valid === false) {
             return {
                 status: 'error',
-                data: JSON.stringify({
+                data: {
                     status: 'gravityFormErrors',
                     message: 'Gravity Forms has flagged issues',
                     validation_messages: errorResponse.validation_messages,
-                }),
+                },
             }
         } else {
             // Unknown error
