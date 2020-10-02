@@ -60,7 +60,7 @@ const GravityFormForm = ({
                 setLoadingState(true)
 
                 const { data, status } = await passToGravityForms(
-                    singleForm.apiURL,
+                    singleForm,
                     values,
                     lambda
                 )
