@@ -1,3 +1,9 @@
+# Intro
+
+This is a custom Gravity Forms Form Component for [Airfleet] (https://www.airfleet.co/). The component has been borrowed almost entirely from @robmarshall's [package] (https://github.com/robmarshall/gatsby-gravityforms-component). Here are some modifications made:
+1. Added support for `fileupload` fields
+2. Enabled direct form submission to the Gravity Forms API endpoint rather than using Netlify functions
+
 # Gravity Forms Form Component
 
 A (relatively) plug and play component for parsing [gatsby-source-gravityforms](https://www.npmjs.com/package/gatsby-source-gravityforms) GraphQL data. Outputs a component using BEM classes, meaning all you need to do is style it.
