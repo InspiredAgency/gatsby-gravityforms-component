@@ -19,6 +19,7 @@ const FieldBuilder = ({
     register,
     errors,
     setValue,
+    watch,
 }) => {
     // Loop through fields and create
     return formData.formFields.map(field => {
@@ -108,6 +109,7 @@ const FieldBuilder = ({
                     />
                 )
             case 'fileupload':
+                const selectedFile = watch(inputName)
                 return (
                     <FileInput
                         errors={errors[inputName]}
@@ -117,6 +119,7 @@ const FieldBuilder = ({
                         register={register}
                         wrapClassName={inputWrapperClass}
                         wrapId={wrapId}
+                        selectedFile={selectedFile}
                     />
                 )
             case 'select':

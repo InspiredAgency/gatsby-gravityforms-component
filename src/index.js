@@ -38,6 +38,7 @@ const GravityFormForm = ({
         reset,
         setError,
         setValue,
+        watch,
     } = useForm()
 
     const [generalError, setGeneralError] = useState('')
@@ -147,6 +148,7 @@ const GravityFormForm = ({
                                     presetValues={presetValues}
                                     register={register}
                                     setValue={setValue}
+                                    watch={watch}
                                 />
                             </ul>
                         </div>
