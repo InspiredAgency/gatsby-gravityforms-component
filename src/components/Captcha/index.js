@@ -65,6 +65,7 @@ const Captcha = ({
                 ref={captchaRef}
                 sitekey={process.env.GATSBY_RECAPTCHA_SITE_KEY}
                 theme={captchaTheme || 'light'}
+                size="compact"
             />
             <input
                 name="g-recaptcha-response"
