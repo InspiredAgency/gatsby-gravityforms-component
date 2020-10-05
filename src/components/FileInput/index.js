@@ -44,7 +44,7 @@ const FileInput = ({
             onChange(e.target.files[0]);
           }}
         />
-        {selectedFile && <div className="gravityform__field__input__fileupload_filename">{selectedFile.name}</div>}
+        {selectedFile && <div className="gravityform__field__input__fileupload_filename">{selectedFile[0].name}</div>}
       </div>
     </InputWrapper>
   );
