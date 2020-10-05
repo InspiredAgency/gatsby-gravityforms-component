@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import InputWrapper from '../../components/InputWrapper';
 import classnames from 'classnames';
 
@@ -13,6 +13,7 @@ const FileInput = ({
   onChange = noop,
   ...wrapProps
 }) => {
+  const [file, setFile] = useState(null);
   const { cssClass, isRequired, size } = fieldData;
 
   return (
@@ -41,8 +42,10 @@ const FileInput = ({
           type="file"
           onChange={e => {
             onChange(e.target.files[0]);
+            setFile(e.target.files[0]);
           }}
         />
+        {file && <div className="gravityform__field__input__fileupload_filename">{file.name}</div>}
       </div>
     </InputWrapper>
   );
