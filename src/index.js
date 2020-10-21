@@ -29,6 +29,7 @@ const GravityFormForm = ({
     presetValues = {},
     successCallback = ({ reset }) => reset(),
     errorCallback,
+    captchaSize,
 }) => {
     // Pull in form functions
     const {
@@ -50,7 +51,7 @@ const GravityFormForm = ({
     // Take ID argument and graphQL Gravity Form data for this form
     const singleForm = getForm(formData, id)
 
-    const onSubmitCallback = async values => {
+    const onSubmitCallback = async (values) => {
         // Make sure we are not already waiting for a response
         if (!formLoading) {
             // Clean error
@@ -92,7 +93,9 @@ const GravityFormForm = ({
 
                     const { confirmations } = singleForm
 
-                    const confirmation = confirmations?.find(el => el.isDefault)
+                    const confirmation = confirmations?.find(
+                        (el) => el.isDefault
+                    )
 
                     setConfirmationMessage(
                         confirmation_message || confirmation.message || false
@@ -149,6 +152,7 @@ const GravityFormForm = ({
                                     register={register}
                                     setValue={setValue}
                                     watch={watch}
+                                    captchaSize={captchaSize}
                                 />
                             </ul>
                         </div>
@@ -189,6 +193,7 @@ GravityFormForm.propTypes = {
     id: PropTypes.number.isRequired,
     lambda: PropTypes.string,
     successCallback: PropTypes.func,
+    captchaSize: PropTypes.string,
 }
 
 export default GravityFormForm
