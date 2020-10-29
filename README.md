@@ -1,6 +1,9 @@
+This is a forked version from @dmachio's [package](https://github.com/dmachio/gatsby-gravityforms-component) with an amend so the captcha size can be set to something other than 'compact'.
+
 # Intro
 
 This is a custom Gravity Forms Form Component for [Airfleet] (https://www.airfleet.co/). The component has been borrowed almost entirely from @robmarshall's [package] (https://github.com/robmarshall/gatsby-gravityforms-component). Here are some modifications made:
+
 1. Added support for `fileupload` fields
 2. Enabled direct form submission to the Gravity Forms API endpoint rather than using Netlify functions
 
