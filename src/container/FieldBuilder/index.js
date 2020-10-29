@@ -20,9 +20,10 @@ const FieldBuilder = ({
     errors,
     setValue,
     watch,
+    captchaSize,
 }) => {
     // Loop through fields and create
-    return formData.formFields.map(field => {
+    return formData.formFields.map((field) => {
         // Set the wrapper classes
         const {
             descriptionPlacement: fieldDescPlace,
@@ -72,6 +73,7 @@ const FieldBuilder = ({
                         register={register}
                         setValue={setValue}
                         wrapClassName={inputWrapperClass}
+                        captchaSize={captchaSize}
                     />
                 )
             // Start with the standard fields

@@ -6,6 +6,7 @@ import InputWrapper from '../InputWrapper'
 
 const Captcha = ({
     captchaTheme,
+    captchaSize,
     errors,
     fieldData,
     name,
@@ -65,7 +66,7 @@ const Captcha = ({
                 ref={captchaRef}
                 sitekey={process.env.GATSBY_RECAPTCHA_SITE_KEY}
                 theme={captchaTheme || 'light'}
-                size="compact"
+                size={captchaSize || 'compact'}
             />
             <input
                 name="g-recaptcha-response"
@@ -78,6 +79,7 @@ const Captcha = ({
 
 Captcha.propTypes = {
     captchaTheme: PropTypes.string,
+    captchaSize: PropTypes.string,
     errors: PropTypes.object,
     fieldData: PropTypes.object,
     name: PropTypes.string,
