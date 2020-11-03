@@ -10,6 +10,7 @@ import Multiselect from '../../components/Multiselect'
 import Select from '../../components/Select'
 import SelectorList from '../../components/SelectorList'
 import Textarea from '../../components/Textarea'
+import Address from '../../components/Address'
 import { filteredKeys } from '../../utils/helpers'
 import { ifDefaultValue, islabelHidden } from '../../utils/inputSettings'
 
@@ -30,7 +31,10 @@ const FieldBuilder = ({
             isRequired,
             subLabelPlacement: fieldSubLabelPlace,
             visibility,
+            inputs,
         } = field
+
+        console.log('GF Inputs', inputs)
 
         const descriptionPlacement =
             fieldDescPlace || formData.descriptionPlacement
@@ -174,7 +178,23 @@ const FieldBuilder = ({
                         wrapId={wrapId}
                     />
                 )
-
+            case 'address':
+                return (
+                    <Address
+                        errors={errors[inputName]}
+                        fieldData={fieldData}
+                        key={field.id}
+                        name={inputName}
+                        register={register}
+                        value={
+                            get(presetValues, inputName, false)
+                                ? get(presetValues, inputName, false)
+                                : ifDefaultValue(field)
+                        }
+                        wrapClassName={inputWrapperClass}
+                        wrapId={wrapId}
+                    />
+                )
             default:
                 return null
         }
