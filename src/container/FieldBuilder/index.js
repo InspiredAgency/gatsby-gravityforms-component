@@ -31,10 +31,7 @@ const FieldBuilder = ({
             isRequired,
             subLabelPlacement: fieldSubLabelPlace,
             visibility,
-            inputs,
         } = field
-
-        console.log('GF Inputs', inputs)
 
         const descriptionPlacement =
             fieldDescPlace || formData.descriptionPlacement
@@ -186,11 +183,11 @@ const FieldBuilder = ({
                         key={field.id}
                         name={inputName}
                         register={register}
-                        value={
-                            get(presetValues, inputName, false)
-                                ? get(presetValues, inputName, false)
-                                : ifDefaultValue(field)
-                        }
+                        // value={
+                        //     get(presetValues, inputName, false)
+                        //         ? get(presetValues, inputName, false)
+                        //         : ifDefaultValue(field)
+                        // }
                         wrapClassName={inputWrapperClass}
                         wrapId={wrapId}
                     />

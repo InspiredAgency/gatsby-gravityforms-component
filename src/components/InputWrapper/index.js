@@ -18,6 +18,7 @@ const InputWrapper = ({
     labelFor,
     wrapClassName,
     wrapId,
+    customLabel,
 }) => {
     return (
         <li
@@ -32,7 +33,7 @@ const InputWrapper = ({
                 className="gravityform__label gfield_label"
                 htmlFor={labelFor}
             >
-                {label}
+                {customLabel || label}
                 {isRequired && <span className="gfield_required">*</span>}
             </label>
             {outputDescription(
@@ -95,4 +96,5 @@ InputWrapper.propTypes = {
     labelFor: PropTypes.string,
     wrapClassName: PropTypes.string,
     wrapId: PropTypes.string,
+    customLabel: PropTypes.string,
 }

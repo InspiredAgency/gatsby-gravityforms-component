@@ -9,10 +9,19 @@ export default async (singleForm, values, lambdaEndpoint) => {
             let value = values[attribute]
 
             const fieldId = attribute.replace('input_', '')
-            const field = find(singleForm.formFields, formField => formField.id == fieldId)
+            const field = find(
+                singleForm.formFields,
+                (formField) => formField.id == fieldId
+            )
 
             if (field && field.type === 'fileupload') {
                 value = value[0]
+            }
+
+            if (field?.type === 'address') {
+                value.map((val, index) =>
+                    formData.append(`${attribute}.${index}`, val)
+                )
             }
 
             formData.append(attribute, value)
@@ -20,6 +29,9 @@ export default async (singleForm, values, lambdaEndpoint) => {
     }
 
     let result
+
+    console.log('SINGLE FORM', singleForm)
+    console.log('POST VALUES', values)
 
     try {
         result = await axios.post(

@@ -4,7 +4,7 @@ import React from 'react'
 import strings from '../../utils/strings'
 import InputWrapper from '../InputWrapper'
 
-const Input = ({ errors, fieldData, name, register, value, ...wrapProps }) => {
+const Input = ({ errors, fieldData, name, register, ...wrapProps }) => {
     const {
         cssClass,
         inputMaskValue,
@@ -15,52 +15,72 @@ const Input = ({ errors, fieldData, name, register, value, ...wrapProps }) => {
         type,
         inputs,
     } = fieldData
-    const regex = inputMaskValue ? new RegExp(inputMaskValue) : false
+
+    const errorList = []
+    errors?.map((error) => {
+        errorList.push({
+            id: error.ref.id,
+            obj: error,
+        })
+    })
+
+    //console.log('fieldData', fieldData)
+
     return (
-        <div>Address Fields</div>
-        // <InputWrapper
-        //     errors={errors}
-        //     inputData={fieldData}
-        //     labelFor={name}
-        //     {...wrapProps}
-        // >
-        //     <input
-        //         aria-invalid={errors}
-        //         aria-required={isRequired}
-        //         className={classnames(
-        //             'gravityform__field__input',
-        //             `gravityform__field__input__${type}`,
-        //             cssClass,
-        //             size
-        //         )}
-        //         defaultValue={value}
-        //         id={name}
-        //         maxLength={maxLength || 524288} // 524288 = 512kb, avoids invalid prop type error if maxLength is undefined.
-        //         name={name}
-        //         placeholder={placeholder}
-        //         ref={register({
-        //             required: isRequired && strings.errors.required,
-        //             maxlength: {
-        //                 value: maxLength > 0 && maxLength,
-        //                 message:
-        //                     maxLength > 0 &&
-        //                     `${strings.errors.maxChar.front}  ${maxLength} ${strings.errors.maxChar.back}`,
-        //             },
-        //             pattern: {
-        //                 value: regex,
-        //                 message: regex && strings.errors.pattern,
-        //             },
-        //         })}
-        //         type={type === 'phone' ? 'tel' : type}
-        //     />
-        // </InputWrapper>
+        <>
+            {inputs.map((input) => {
+                if (input.isHidden) return
+
+                const inputName = `input_${input.id}`
+
+                const error =
+                    errorList.length > 0
+                        ? errorList.find((x) => x.id === inputName)
+                        : null
+
+                const inputRequired =
+                    input.label === 'Address Line 2' ? false : isRequired
+
+                return (
+                    <InputWrapper
+                        key={input.id}
+                        errors={error?.obj}
+                        inputData={{ ...fieldData, isRequired: inputRequired }}
+                        labelFor={inputName}
+                        customLabel={input.customLabel || input.label}
+                        {...wrapProps}
+                    >
+                        <input
+                            aria-invalid={error?.obj}
+                            aria-required={inputRequired}
+                            className={classnames(
+                                'gravityform__field__input',
+                                `gravityform__field__input__${type}`,
+                                cssClass,
+                                size
+                            )}
+                            //defaultValue={value}
+                            id={inputName}
+                            maxLength={maxLength || 524288} // 524288 = 512kb, avoids invalid prop type error if maxLength is undefined.
+                            name={inputName}
+                            placeholder={placeholder}
+                            ref={register({
+                                required:
+                                    inputRequired && strings.errors.required,
+                            })}
+                            type="text"
+                        />
+                    </InputWrapper>
+                )
+            })}
+        </>
     )
 }
 
 export default Input
 
 Input.propTypes = {
-    errors: PropTypes.object,
+    errors: PropTypes.array,
     fieldData: PropTypes.shape({
         cssClass: PropTypes.string,
         inputMaskValue: PropTypes.string,
@@ -73,6 +93,6 @@ Input.propTypes = {
     }),
     name: PropTypes.string,
     register: PropTypes.func,
-    value: PropTypes.string,
+    //value: PropTypes.string,
     wrapProps: PropTypes.object,
 }
