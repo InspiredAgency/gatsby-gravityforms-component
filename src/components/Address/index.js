@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import strings from '../../utils/strings'
 import InputWrapper from '../InputWrapper'
+import CountryDropDown from './CountryDropDown'
 
 const Input = ({ errors, fieldData, name, register, ...wrapProps }) => {
     const {
         cssClass,
-        inputMaskValue,
         isRequired,
         maxLength,
         placeholder,
@@ -23,8 +23,6 @@ const Input = ({ errors, fieldData, name, register, ...wrapProps }) => {
             obj: error,
         })
     })
-
-    //console.log('fieldData', fieldData)
 
     return (
         <>
@@ -50,26 +48,47 @@ const Input = ({ errors, fieldData, name, register, ...wrapProps }) => {
                         customLabel={input.customLabel || input.label}
                         {...wrapProps}
                     >
-                        <input
-                            aria-invalid={error?.obj}
-                            aria-required={inputRequired}
-                            className={classnames(
-                                'gravityform__field__input',
-                                `gravityform__field__input__${type}`,
-                                cssClass,
-                                size
-                            )}
-                            //defaultValue={value}
-                            id={inputName}
-                            maxLength={maxLength || 524288} // 524288 = 512kb, avoids invalid prop type error if maxLength is undefined.
-                            name={inputName}
-                            placeholder={placeholder}
-                            ref={register({
-                                required:
-                                    inputRequired && strings.errors.required,
-                            })}
-                            type="text"
-                        />
+                        {input.label !== 'Country' && (
+                            <input
+                                aria-invalid={error?.obj}
+                                aria-required={inputRequired}
+                                className={classnames(
+                                    'gravityform__field__input',
+                                    `gravityform__field__input__${type}`,
+                                    cssClass,
+                                    size
+                                )}
+                                id={inputName}
+                                maxLength={maxLength || 524288} // 524288 = 512kb, avoids invalid prop type error if maxLength is undefined.
+                                name={inputName}
+                                placeholder={placeholder}
+                                ref={register({
+                                    required:
+                                        inputRequired &&
+                                        strings.errors.required,
+                                })}
+                                type="text"
+                            />
+                        )}
+                        {input.label === 'Country' && (
+                            <CountryDropDown
+                                id={inputName}
+                                name={inputName}
+                                aria-invalid={error?.obj}
+                                aria-required={inputRequired}
+                                className={classnames(
+                                    'gravityform__field__input',
+                                    `gravityform__field__input__${type}`,
+                                    cssClass,
+                                    size
+                                )}
+                                ref={register({
+                                    required:
+                                        inputRequired &&
+                                        strings.errors.required,
+                                })}
+                            />
+                        )}
                     </InputWrapper>
                 )
             })}
@@ -83,7 +102,6 @@ Input.propTypes = {
     errors: PropTypes.array,
     fieldData: PropTypes.shape({
         cssClass: PropTypes.string,
-        inputMaskValue: PropTypes.string,
         maxLength: PropTypes.number,
         placeholder: PropTypes.string,
         isRequired: PropTypes.bool,
@@ -93,6 +111,5 @@ Input.propTypes = {
     }),
     name: PropTypes.string,
     register: PropTypes.func,
-    //value: PropTypes.string,
     wrapProps: PropTypes.object,
 }
