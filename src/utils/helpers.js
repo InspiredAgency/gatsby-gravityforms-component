@@ -19,8 +19,27 @@ function filteredKeys(obj, filter) {
     return keys
 }
 
+function cleansePostcodeSoftwareData(data) {
+    if (!data) return null
+
+    const variants = data.address.premisedata[0]
+        .substring(1)
+        .replaceAll('|;', '')
+        .split('|')
+
+    return {
+        address1: data.address.address1[0],
+        address2: data.address.address2[0],
+        county: data.address.county[0],
+        town: data.address.town[0],
+        postcode: data.address.postcode[0],
+        variants,
+    }
+}
+
 module.exports = {
     createGfKeyFromField,
     doesObjectExist,
     filteredKeys,
+    cleansePostcodeSoftwareData,
 }

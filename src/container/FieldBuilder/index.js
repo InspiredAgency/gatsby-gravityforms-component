@@ -22,6 +22,7 @@ const FieldBuilder = ({
     setValue,
     watch,
     captchaSize,
+    enablePostcodeSoftware,
 }) => {
     // Loop through fields and create
     return formData.formFields.map((field) => {
@@ -183,13 +184,10 @@ const FieldBuilder = ({
                         key={field.id}
                         name={inputName}
                         register={register}
-                        // value={
-                        //     get(presetValues, inputName, false)
-                        //         ? get(presetValues, inputName, false)
-                        //         : ifDefaultValue(field)
-                        // }
                         wrapClassName={inputWrapperClass}
                         wrapId={wrapId}
+                        enablePostcodeSoftware={enablePostcodeSoftware}
+                        setValue={setValue}
                     />
                 )
             default:
