@@ -22,19 +22,30 @@ function filteredKeys(obj, filter) {
 function cleansePostcodeSoftwareData(data) {
     if (!data) return null
 
+    const error = data.address.errormessage[0]
+    if (error)
+        return {
+            error,
+        }
+
     const variants = data.address.premisedata[0]
-        .substring(1)
-        .replaceAll('|;', '')
-        .split('|')
+        .replaceAll('|', ' ')
+        .split(';')
+        .map((x) => x.trim()) // Trim each item in array
+        .filter((x) => x) // Only return truthy values
 
     return {
-        address1: data.address.address1[0],
-        address2: data.address.address2[0],
-        county: data.address.county[0],
-        town: data.address.town[0],
-        postcode: data.address.postcode[0],
+        address1: mapPostcodeSoftwareValue('address1', data.address),
+        address2: mapPostcodeSoftwareValue('address2', data.address),
+        county: mapPostcodeSoftwareValue('county', data.address),
+        town: mapPostcodeSoftwareValue('town', data.address),
+        postcode: mapPostcodeSoftwareValue('postcode', data.address),
         variants,
     }
+}
+
+function mapPostcodeSoftwareValue(property, data) {
+    return property in data ? data[property][0] : ''
 }
 
 module.exports = {

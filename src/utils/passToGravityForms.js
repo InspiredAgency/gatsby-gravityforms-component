@@ -30,9 +30,6 @@ export default async (singleForm, values, lambdaEndpoint) => {
 
     let result
 
-    console.log('SINGLE FORM', singleForm)
-    console.log('POST VALUES', values)
-
     try {
         result = await axios.post(
             `${singleForm.apiURL}/submissions`,
