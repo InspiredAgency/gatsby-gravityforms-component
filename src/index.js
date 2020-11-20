@@ -31,6 +31,7 @@ const GravityFormForm = ({
     errorCallback,
     captchaSize,
     enablePostcodeSoftware = false,
+    enableCompactAddress = false,
 }) => {
     // Pull in form functions
     const {
@@ -157,6 +158,7 @@ const GravityFormForm = ({
                                     enablePostcodeSoftware={
                                         enablePostcodeSoftware
                                     }
+                                    enableCompactAddress={enableCompactAddress}
                                 />
                             </ul>
                         </div>
@@ -199,6 +201,7 @@ GravityFormForm.propTypes = {
     successCallback: PropTypes.func,
     captchaSize: PropTypes.string,
     enablePostcodeSoftware: PropTypes.bool,
+    enableCompactAddress: PropTypes.bool,
 }
 
 export default GravityFormForm

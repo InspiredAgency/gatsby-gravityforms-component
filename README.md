@@ -4,16 +4,14 @@ This is a forked version from @dmachio's [package](https://github.com/dmachio/ga
 
 The following changes have been made:
 
-1. Add option to change how the re-captcha is displayed. Passing a prop called 'captchaSize' (data type: string) with one of the valid options will change how the re-captcha is displayed. The options are as follows:
+1. Add option to change how the re-captcha is displayed. Passing a prop called 'captchaSize' (data type: string) with one of the valid options will change how the re-captcha is displayed. The options are: normal, compact or invisible
+2. Add support for address fields in Gravity Forms. Default country is the UK, if address field is set to required all but address line 2 will be validated.
+3. Add support for address lookup using [Postcode Software](https://www.postcodesoftware.com). To activate postcode lookup pass a prop called 'enablePostcodeSoftware' (data type: bool) set to true. Next setup env variables for your account username and password, to use the Postcode Software test account set the username and password to: test. You can then use this post code for testing: LS18 5SG. The env variables are:
 
--   normal
--   compact
--   invisible
-
-2. Add support for address fields in Gravity Forms. Default country is the UK, if address field is set to required all but address line 2 will be validated. Additionally support has been added for address lookup using [Postcode Software](https://www.postcodesoftware.com). To activate postcode lookup pass a prop called 'enablePostcodeSoftware' (data type: bool) set to true. Next setup env variables for your account username and password, to use the Postcode Software test account set the username and password to: test. The env variables are as follows:
-
--   GATSBY_POSTCODE_SOFTWARE_USERNAME
--   GATSBY_POSTCODE_SOFTWARE_PASSWORD
+```js
+GATSBY_POSTCODE_SOFTWARE_USERNAME = test
+GATSBY_POSTCODE_SOFTWARE_PASSWORD = test
+```
 
 # Intro (@dmachio)
 

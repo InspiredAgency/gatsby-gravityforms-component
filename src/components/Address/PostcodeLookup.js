@@ -6,12 +6,13 @@ import { cleansePostcodeSoftwareData } from '../../utils/helpers'
 
 const apiUrl = 'https://ws1.postcodesoftware.co.uk/lookup.asmx/getAddress'
 
-function PostcodeLookup({ fieldId, setValue }) {
+function PostcodeLookup({ fieldId, setValue, enableCompactAddress }) {
     const node = useRef()
     const [postcode, setPostcode] = useState('')
     const [errorMessage, setErrorMessage] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [addressData, setAddressData] = useState(null)
+    const [singleLineAddress, setSingleLineAddress] = useState(null)
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside)
@@ -74,8 +75,21 @@ function PostcodeLookup({ fieldId, setValue }) {
         setValue(`input_${fieldId}.4`, addressData.county, true)
         setValue(`input_${fieldId}.5`, addressData.postcode, true)
 
+        if (enableCompactAddress) setSingleLineAddress(concatAddress())
+
         setAddressData(null)
         setPostcode('')
+    }
+
+    const concatAddress = () => {
+        if (!addressData) return null
+
+        let address
+        for (const [key, value] of Object.entries(addressData)) {
+            console.log(`${key}: ${value}`)
+            address = address + value + ', '
+        }
+        return address
     }
 
     return (
@@ -117,6 +131,11 @@ function PostcodeLookup({ fieldId, setValue }) {
                     })}
                 </div>
             )}
+            {singleLineAddress && (
+                <div className="gravityform__postcode_software_selected_address">
+                    {singleLineAddress}
+                </div>
+            )}
         </div>
     )
 }
@@ -126,4 +145,5 @@ export default PostcodeLookup
 PostcodeLookup.propTypes = {
     fieldId: PropTypes.number,
     setValue: PropTypes.func,
+    enableCompactAddress: PropTypes.bool,
 }

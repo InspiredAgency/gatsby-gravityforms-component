@@ -12,6 +12,7 @@ const Input = ({
     name,
     register,
     enablePostcodeSoftware,
+    enableCompactAddress,
     setValue,
     ...wrapProps
 }) => {
@@ -66,13 +67,19 @@ const Input = ({
         <>
             {enablePostcodeSoftware && (
                 <li className="gravityform__postcode_software">
-                    <PostcodeLookup fieldId={id} setValue={setValue} />
+                    <PostcodeLookup
+                        fieldId={id}
+                        setValue={setValue}
+                        enableCompactAddress={enableCompactAddress}
+                    />
                 </li>
             )}
             <li>
                 <ul className="gravityform__address_container">
                     {inputs.map((input) => {
-                        if (input.isHidden) return
+                        //TODO: Test both setting an input as hidden and also as part of the enableCompact address prop
+                        const isHidden = enableCompactAddress || input.isHidden
+                        //if (input.isHidden) return
 
                         const inputName = `input_${input.id}`
 
@@ -97,6 +104,7 @@ const Input = ({
                                 labelFor={inputName}
                                 customLabel={input.customLabel || input.label}
                                 {...wrapProps}
+                                isHidden={isHidden}
                             >
                                 {input.label !== 'Country' && (
                                     <input

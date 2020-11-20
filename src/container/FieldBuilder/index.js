@@ -23,6 +23,7 @@ const FieldBuilder = ({
     watch,
     captchaSize,
     enablePostcodeSoftware,
+    enableCompactAddress,
 }) => {
     // Loop through fields and create
     return formData.formFields.map((field) => {
@@ -187,6 +188,7 @@ const FieldBuilder = ({
                         wrapClassName={inputWrapperClass}
                         wrapId={wrapId}
                         enablePostcodeSoftware={enablePostcodeSoftware}
+                        enableCompactAddress={enableCompactAddress}
                         setValue={setValue}
                     />
                 )

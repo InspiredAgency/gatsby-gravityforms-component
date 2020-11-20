@@ -19,9 +19,11 @@ const InputWrapper = ({
     wrapClassName,
     wrapId,
     customLabel,
+    isHidden = false,
 }) => {
     return (
         <li
+            style={{ display: isHidden ? 'none' : undefined }}
             className={classnames(
                 wrapClassName,
                 errors && 'gravityform__field--error',
@@ -97,4 +99,5 @@ InputWrapper.propTypes = {
     wrapClassName: PropTypes.string,
     wrapId: PropTypes.string,
     customLabel: PropTypes.string,
+    isHidden: PropTypes.bool,
 }
