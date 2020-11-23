@@ -11,11 +11,7 @@ overwrite([
 function CountryDropDown({ defaultValue, ...rest }, ref) {
     const contries = getNames().sort()
     return (
-        <select
-            ref={ref}
-            defaultValue={defaultValue || 'United Kingdom'}
-            {...rest}
-        >
+        <select ref={ref} defaultValue={defaultValue || null} {...rest}>
             <option value="">Select a country</option>
             {contries.map((country) => (
                 <option key={country} value={country}>

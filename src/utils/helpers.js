@@ -40,6 +40,7 @@ function cleansePostcodeSoftwareData(data) {
         county: mapPostcodeSoftwareValue('county', data.address),
         town: mapPostcodeSoftwareValue('town', data.address),
         postcode: mapPostcodeSoftwareValue('postcode', data.address),
+        country: 'United Kingdom', // Postcode software can only return UK addresses
         variants,
     }
 }

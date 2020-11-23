@@ -6,7 +6,13 @@ import { cleansePostcodeSoftwareData } from '../../utils/helpers'
 
 const apiUrl = 'https://ws1.postcodesoftware.co.uk/lookup.asmx/getAddress'
 
-function PostcodeLookup({ fieldId, setValue, enableCompactAddress }) {
+function PostcodeLookup({
+    fieldId,
+    setValue,
+    enableCompactAddress,
+    handleShowAddress,
+    isAddressHidden,
+}) {
     const node = useRef()
     const [postcode, setPostcode] = useState('')
     const [errorMessage, setErrorMessage] = useState(null)
@@ -74,22 +80,46 @@ function PostcodeLookup({ fieldId, setValue, enableCompactAddress }) {
         setValue(`input_${fieldId}.3`, addressData.town, true)
         setValue(`input_${fieldId}.4`, addressData.county, true)
         setValue(`input_${fieldId}.5`, addressData.postcode, true)
+        setValue(`input_${fieldId}.6`, addressData.country, true)
 
-        if (enableCompactAddress) setSingleLineAddress(concatAddress())
+        if (enableCompactAddress)
+            setSingleLineAddress(concatAddress(firstField))
 
         setAddressData(null)
         setPostcode('')
     }
 
-    const concatAddress = () => {
+    const concatAddress = (address1) => {
         if (!addressData) return null
 
-        let address
-        for (const [key, value] of Object.entries(addressData)) {
-            console.log(`${key}: ${value}`)
-            address = address + value + ', '
+        let address = ''
+        const mappedAddress = {
+            address1,
+            address2: addressData.address2,
+            town: addressData.town,
+            county: addressData.county,
+            postcode: addressData.postcode,
+            country: addressData.country,
         }
-        return address
+
+        for (const [, value] of Object.entries(mappedAddress)) {
+            if (!value) continue
+            address += value + ', '
+        }
+
+        const result = address.trim().slice(0, -1)
+        return result
+    }
+
+    const removeAddress = () => {
+        setValue(`input_${fieldId}.1`, null)
+        setValue(`input_${fieldId}.2`, null)
+        setValue(`input_${fieldId}.3`, null)
+        setValue(`input_${fieldId}.4`, null)
+        setValue(`input_${fieldId}.5`, null)
+        setValue(`input_${fieldId}.6`, null)
+
+        setSingleLineAddress(null)
     }
 
     return (
@@ -109,6 +139,15 @@ function PostcodeLookup({ fieldId, setValue, enableCompactAddress }) {
                 >
                     {isLoading ? 'Loading...' : 'Find Address'}
                 </button>
+                {enableCompactAddress && (
+                    <button
+                        type="button"
+                        className="gravityform__postcode_software_button gravityform__postcode_software_button_enter_manually"
+                        onClick={handleShowAddress}
+                    >
+                        Enter Manually
+                    </button>
+                )}
             </div>
             {errorMessage && (
                 <div className="gravityform__postcode_software_error">
@@ -131,9 +170,18 @@ function PostcodeLookup({ fieldId, setValue, enableCompactAddress }) {
                     })}
                 </div>
             )}
-            {singleLineAddress && (
+            {isAddressHidden && singleLineAddress && (
                 <div className="gravityform__postcode_software_selected_address">
-                    {singleLineAddress}
+                    <div>{singleLineAddress}</div>
+                    <div>
+                        <button
+                            type="button"
+                            onClick={removeAddress}
+                            className="gravityform__postcode_software_button_remove_address"
+                        >
+                            Remove
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
@@ -146,4 +194,6 @@ PostcodeLookup.propTypes = {
     fieldId: PropTypes.number,
     setValue: PropTypes.func,
     enableCompactAddress: PropTypes.bool,
+    handleShowAddress: PropTypes.func,
+    isAddressHidden: PropTypes.bool,
 }

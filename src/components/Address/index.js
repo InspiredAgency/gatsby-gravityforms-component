@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useState } from 'react'
 import strings from '../../utils/strings'
 import InputWrapper from '../InputWrapper'
 import CountryDropDown from './CountryDropDown'
@@ -16,6 +16,8 @@ const Input = ({
     setValue,
     ...wrapProps
 }) => {
+    const [isAddressHidden, setIsAddressHidden] = useState(enableCompactAddress)
+
     if (
         enablePostcodeSoftware &&
         (!process.env.GATSBY_POSTCODE_SOFTWARE_USERNAME ||
@@ -63,6 +65,8 @@ const Input = ({
         })
     })
 
+    const handleShowAddress = () => setIsAddressHidden(() => !isAddressHidden)
+
     return (
         <>
             {enablePostcodeSoftware && (
@@ -71,16 +75,19 @@ const Input = ({
                         fieldId={id}
                         setValue={setValue}
                         enableCompactAddress={enableCompactAddress}
+                        handleShowAddress={handleShowAddress}
+                        isAddressHidden={isAddressHidden}
                     />
                 </li>
             )}
             <li>
-                <ul className="gravityform__address_container">
+                <ul
+                    className="gravityform__address_container"
+                    style={{
+                        display: isAddressHidden ? 'none' : undefined,
+                    }}
+                >
                     {inputs.map((input) => {
-                        //TODO: Test both setting an input as hidden and also as part of the enableCompact address prop
-                        const isHidden = enableCompactAddress || input.isHidden
-                        //if (input.isHidden) return
-
                         const inputName = `input_${input.id}`
 
                         const error =
@@ -104,7 +111,7 @@ const Input = ({
                                 labelFor={inputName}
                                 customLabel={input.customLabel || input.label}
                                 {...wrapProps}
-                                isHidden={isHidden}
+                                isHidden={input.isHidden}
                             >
                                 {input.label !== 'Country' && (
                                     <input
