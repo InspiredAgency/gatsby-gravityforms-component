@@ -67,10 +67,21 @@ const Input = ({
 
     const handleShowAddress = () => setIsAddressHidden(() => !isAddressHidden)
 
+    const postcodeLookupError = {
+        type: 'required',
+        message: 'The address field is required.',
+        ref: null,
+    }
+
     return (
         <>
             {enablePostcodeSoftware && (
-                <li className="gravityform__postcode_software">
+                <InputWrapper
+                    errors={errors && postcodeLookupError}
+                    inputData={fieldData}
+                    labelFor={name}
+                    wrapClassName="gravityform__postcode_software"
+                >
                     <PostcodeLookup
                         fieldId={id}
                         setValue={setValue}
@@ -78,7 +89,7 @@ const Input = ({
                         handleShowAddress={handleShowAddress}
                         isAddressHidden={isAddressHidden}
                     />
-                </li>
+                </InputWrapper>
             )}
             <li>
                 <ul
