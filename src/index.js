@@ -1,8 +1,9 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form/dist/react-hook-form.ie11'
 import ReactHtmlParser from 'react-html-parser'
+import qs from 'query-string'
 import FormGeneralError from './components/FormGeneralError'
 import FieldBuilder from './container/FieldBuilder'
 import getForm from './utils/getForm'
@@ -12,6 +13,7 @@ import {
 } from './utils/manageErrors'
 import { submissionHasOneFieldEntry } from './utils/manageFormData'
 import passToGravityForms from './utils/passToGravityForms'
+import { validLeadTrackingFields } from './utils/helpers'
 
 /**
  * Component to take Gravity Form graphQL data and turn into
@@ -32,6 +34,7 @@ const GravityFormForm = ({
     captchaSize,
     enablePostcodeSoftware = false,
     enableCompactAddress = false,
+    enableLeadTracking = false,
 }) => {
     // Pull in form functions
     const {
@@ -43,6 +46,17 @@ const GravityFormForm = ({
         setValue,
         watch,
     } = useForm()
+
+    const qsRef = useRef(null)
+    qsRef.current = qs.parse(window.location.search)
+    console.log(qsRef.current)
+
+    // useEffect(() => {
+    //     const qsData = qs.parse(window.location.search)
+
+    //     qsRef.current = qsData
+    //     console.log(qsRef.current)
+    // }, [])
 
     const [generalError, setGeneralError] = useState('')
     const [formLoading, setLoadingState] = useState(false)
@@ -180,6 +194,24 @@ const GravityFormForm = ({
                                 )}
                             </button>
                         </div>
+
+                        {enableLeadTracking && (
+                            <div className="gravityform__lead-tracking-container">
+                                {Object.keys(qsRef.current).map((key) => {
+                                    if (validLeadTrackingFields.includes(key))
+                                        return (
+                                            <input
+                                                key={key}
+                                                type="hidden"
+                                                defaultValue={
+                                                    qsRef.current[key]
+                                                }
+                                                name={key}
+                                            />
+                                        )
+                                })}
+                            </div>
+                        )}
                     </form>
                 )}
             </div>
@@ -202,6 +234,7 @@ GravityFormForm.propTypes = {
     captchaSize: PropTypes.string,
     enablePostcodeSoftware: PropTypes.bool,
     enableCompactAddress: PropTypes.bool,
+    enableLeadTracking: PropTypes.bool,
 }
 
 export default GravityFormForm
