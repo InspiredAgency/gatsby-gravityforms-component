@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form/dist/react-hook-form.ie11'
 import ReactHtmlParser from 'react-html-parser'
 import qs from 'query-string'
@@ -47,16 +47,14 @@ const GravityFormForm = ({
         watch,
     } = useForm()
 
-    const qsRef = useRef(null)
-    qsRef.current = qs.parse(window.location.search)
-    console.log(qsRef.current)
+    const [qsData, setQsData] = useState({})
 
-    // useEffect(() => {
-    //     const qsData = qs.parse(window.location.search)
-
-    //     qsRef.current = qsData
-    //     console.log(qsRef.current)
-    // }, [])
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const parseQs = qs.parse(window.location.search)
+            setQsData(parseQs)
+        }
+    }, [])
 
     const [generalError, setGeneralError] = useState('')
     const [formLoading, setLoadingState] = useState(false)
@@ -197,15 +195,13 @@ const GravityFormForm = ({
 
                         {enableLeadTracking && (
                             <div className="gravityform__lead-tracking-container">
-                                {Object.keys(qsRef.current).map((key) => {
+                                {Object.keys(qsData).map((key) => {
                                     if (validLeadTrackingFields.includes(key))
                                         return (
                                             <input
                                                 key={key}
                                                 type="hidden"
-                                                defaultValue={
-                                                    qsRef.current[key]
-                                                }
+                                                defaultValue={qsData[key]}
                                                 name={key}
                                             />
                                         )
