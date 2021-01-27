@@ -99,6 +99,7 @@ const FieldBuilder = ({
                         }
                         wrapClassName={inputWrapperClass}
                         wrapId={wrapId}
+                        setValue={setValue}
                     />
                 )
             case 'textarea':

@@ -1,11 +1,22 @@
+import { useEffect } from 'react'
+import qs from 'query-string'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 import strings from '../../utils/strings'
 import InputWrapper from '../InputWrapper'
 
-const Input = ({ errors, fieldData, name, register, value, ...wrapProps }) => {
+const Input = ({
+    errors,
+    fieldData,
+    name,
+    register,
+    value,
+    setValue,
+    ...wrapProps
+}) => {
     const {
+        id,
         cssClass,
         inputMaskValue,
         isRequired,
@@ -13,8 +24,26 @@ const Input = ({ errors, fieldData, name, register, value, ...wrapProps }) => {
         placeholder,
         size,
         type,
+        allowsPrepopulate,
+        inputName,
     } = fieldData
     const regex = inputMaskValue ? new RegExp(inputMaskValue) : false
+
+    useEffect(() => {
+        if (!allowsPrepopulate) return
+
+        if (typeof window !== 'undefined') {
+            const qsData = qs.parse(window.location.search)
+            // Check the window object for matching prop. Usually added via Google.
+            let inputValue = window[inputName]
+            console.log('GTM value', inputValue)
+            // If a querystring has been passed, overwrite the value
+            qsData[inputName] && (inputValue = qsData[inputName])
+
+            setValue(`input_${id}`, inputValue)
+        }
+    }, [])
+
     return (
         <InputWrapper
             errors={errors}
