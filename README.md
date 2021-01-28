@@ -8,7 +8,7 @@ The following changes have been made:
 2. Add support for address fields in Gravity Forms. If address field is set to required all but address line 2 will be validated.
 3. Add support for address lookup using [Postcode Software](https://www.postcodesoftware.com). To activate postcode lookup pass a prop called 'enablePostcodeSoftware' (data type: bool) set to true. Next setup env variables for your account username and password, to use the Postcode Software test account set the username and password to: test. You can then use this post code for testing: LS18 5SG.
 4. Add compact address functionality. Pass the prop 'enableCompactAddress' (data type: bool) set to true. This will hide all address fields, when an address is selected from the postcode look up it will be displayed as a single line below the post code look up field. Options to manually edit the address and remove the current address are also available.
-5. Add lead tracking. Pass the prop 'enableLeadTracking' (data type: bool) set to true. If enabled hidden fields based on specific querystring properties will create hidden fields in your form, so lead tracking data can be stored. The valid fields are: 'source', 'medium', 'term', 'content', 'campaign', 'session_count', 'pageview_count'.
+5. Add lead tracking. Pass the prop 'enableLeadTracking' (data type: bool) set to true. If enabled and GTM is setup on the site with the correct hidden fields in GF ('source', 'medium', 'term', 'content', 'campaign', 'session_count', 'pageview_count'), then the window object is checked in js for the valid fields and if found will prepopulate the input. Make sure to set the hidden fields to allow prepopulate in the advanced tab in GF.
 
 Env variables for postcode software
 

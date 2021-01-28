@@ -24,6 +24,7 @@ const FieldBuilder = ({
     captchaSize,
     enablePostcodeSoftware,
     enableCompactAddress,
+    enableLeadTracking,
 }) => {
     // Loop through fields and create
     return formData.formFields.map((field) => {
@@ -100,6 +101,7 @@ const FieldBuilder = ({
                         wrapClassName={inputWrapperClass}
                         wrapId={wrapId}
                         setValue={setValue}
+                        enableLeadTracking={enableLeadTracking}
                     />
                 )
             case 'textarea':

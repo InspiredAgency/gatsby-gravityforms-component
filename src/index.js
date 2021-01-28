@@ -1,9 +1,8 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form/dist/react-hook-form.ie11'
 import ReactHtmlParser from 'react-html-parser'
-import qs from 'query-string'
 import FormGeneralError from './components/FormGeneralError'
 import FieldBuilder from './container/FieldBuilder'
 import getForm from './utils/getForm'
@@ -13,7 +12,6 @@ import {
 } from './utils/manageErrors'
 import { submissionHasOneFieldEntry } from './utils/manageFormData'
 import passToGravityForms from './utils/passToGravityForms'
-import { validLeadTrackingFields } from './utils/helpers'
 
 /**
  * Component to take Gravity Form graphQL data and turn into
@@ -46,15 +44,6 @@ const GravityFormForm = ({
         setValue,
         watch,
     } = useForm()
-
-    const [qsData, setQsData] = useState({})
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const parseQs = qs.parse(window.location.search)
-            setQsData(parseQs)
-        }
-    }, [])
 
     const [generalError, setGeneralError] = useState('')
     const [formLoading, setLoadingState] = useState(false)
@@ -171,10 +160,10 @@ const GravityFormForm = ({
                                         enablePostcodeSoftware
                                     }
                                     enableCompactAddress={enableCompactAddress}
+                                    enableLeadTracking={enableLeadTracking}
                                 />
                             </ul>
                         </div>
-
                         <div
                             className={`gform_footer ${singleForm.labelPlacement}`}
                         >
@@ -192,22 +181,6 @@ const GravityFormForm = ({
                                 )}
                             </button>
                         </div>
-
-                        {enableLeadTracking && (
-                            <div className="gravityform__lead-tracking-container">
-                                {Object.keys(qsData).map((key) => {
-                                    if (validLeadTrackingFields.includes(key))
-                                        return (
-                                            <input
-                                                key={key}
-                                                type="hidden"
-                                                defaultValue={qsData[key]}
-                                                name={key}
-                                            />
-                                        )
-                                })}
-                            </div>
-                        )}
                     </form>
                 )}
             </div>

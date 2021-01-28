@@ -13,6 +13,7 @@ const Input = ({
     register,
     value,
     setValue,
+    enableLeadTracking,
     ...wrapProps
 }) => {
     const {
@@ -34,9 +35,8 @@ const Input = ({
 
         if (typeof window !== 'undefined') {
             const qsData = qs.parse(window.location.search)
-            // Check the window object for matching prop. Usually added via Google.
-            let inputValue = window[inputName]
-            console.log('GTM value', inputValue)
+            // Check the window object for matching prop, this will require GTM to be setup
+            let inputValue = enableLeadTracking ? window[inputName] : undefined
             // If a querystring has been passed, overwrite the value
             qsData[inputName] && (inputValue = qsData[inputName])
 

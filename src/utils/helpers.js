@@ -49,20 +49,9 @@ function mapPostcodeSoftwareValue(property, data) {
     return property in data ? data[property][0] : ''
 }
 
-const validLeadTrackingFields = [
-    'source',
-    'medium',
-    'term',
-    'content',
-    'campaign',
-    'session_count',
-    'pageview_count',
-]
-
 module.exports = {
     createGfKeyFromField,
     doesObjectExist,
     filteredKeys,
     cleansePostcodeSoftwareData,
-    validLeadTrackingFields,
 }
