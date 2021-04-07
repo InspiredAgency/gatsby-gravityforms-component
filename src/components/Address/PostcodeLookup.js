@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 import { parseStringPromise } from 'xml2js'
 import { cleansePostcodeSoftwareData } from '../../utils/helpers'
 
-const apiUrl = 'https://ws1.postcodesoftware.co.uk/lookup.asmx/getAddress'
-
 function PostcodeLookup({
     fieldId,
     setValue,
@@ -41,13 +39,14 @@ function PostcodeLookup({
             setErrorMessage(null)
             setIsLoading(true)
 
-            const response = await axios.get(apiUrl, {
-                params: {
-                    account: process.env.GATSBY_POSTCODE_SOFTWARE_USERNAME,
-                    password: process.env.GATSBY_POSTCODE_SOFTWARE_PASSWORD,
-                    postcode,
-                },
-            })
+            const response = await axios.get(
+                process.env.GATSBY_POSTCODE_SOFTWARE_ENDPOINT,
+                {
+                    params: {
+                        postcode,
+                    },
+                }
+            )
 
             const rawData = await parseStringPromise(response.data, {
                 normalize: true,

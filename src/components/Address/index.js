@@ -20,8 +20,7 @@ const Input = ({
 
     if (
         enablePostcodeSoftware &&
-        (!process.env.GATSBY_POSTCODE_SOFTWARE_USERNAME ||
-            !process.env.GATSBY_POSTCODE_SOFTWARE_PASSWORD)
+        !process.env.GATSBY_POSTCODE_SOFTWARE_ENDPOINT
     ) {
         return (
             <div className="gravityform__postcodesoftware_notification">
@@ -29,18 +28,13 @@ const Input = ({
                     <strong>
                         To use Postcode Software for address lookup
                         functionality you need to set the following env
-                        variables with your account details:
+                        variable:
                     </strong>
                 </p>
-                <p>GATSBY_POSTCODE_SOFTWARE_USERNAME</p>
-                <p>GATSBY_POSTCODE_SOFTWARE_PASSWORD</p>
+                <p>GATSBY_POSTCODE_SOFTWARE_ENDPOINT</p>
                 <p>
-                    To use the free account while testing set boths values for
-                    username and password to be: test
-                </p>
-                <p>
-                    When using the test account you can only use LS18 postcodes.
-                    e.g: LS185NJ
+                    You will need to setup your own api or serverless function
+                    which calls the postcode software api and returns the data.
                 </p>
             </div>
         )
