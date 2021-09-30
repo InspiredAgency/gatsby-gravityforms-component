@@ -14,7 +14,8 @@ const Captcha = ({
     setValue,
     ...wrapProps
 }) => {
-    if (navigator) {
+    const isBrowser = typeof window !== 'undefined'
+    if (isBrowser) {
         const userAgent = navigator.userAgent
         if (
             userAgent.includes('Chrome-Lighthouse') ||
