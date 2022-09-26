@@ -60,8 +60,8 @@
         "install-peers": "^1.0.3"
     },
     "peerDependencies": {
-        "gatsby": "^2.18.25",
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6"
+        "gatsby": "2 - 4",
+        "react": "16 - 18",
+        "react-dom": "16 - 18"
     }
 }
