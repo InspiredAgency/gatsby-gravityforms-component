@@ -92,7 +92,7 @@ const Input = ({
                         display: isAddressHidden ? 'none' : undefined,
                     }}
                 >
-                    {inputs.map((input) => {
+                    {inputs?.map((input) => {
                         const inputName = `input_${input.id}`
 
                         const error =
