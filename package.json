@@ -1,6 +1,6 @@
 {
     "name": "@inspired-agency/gatsby-gravityforms-component",
-    "version": "2.1.6",
+    "version": "2.1.7",
     "description": "A component to take gatsby-source-gravityforms query data and return usable components",
     "main": "dist/index.js",
     "scripts": {
@@ -60,7 +60,7 @@
         "install-peers": "^1.0.3"
     },
     "peerDependencies": {
-        "gatsby": "2 - 4",
+        "gatsby": "2 - 6",
         "react": "16 - 18",
         "react-dom": "16 - 18"
     }
