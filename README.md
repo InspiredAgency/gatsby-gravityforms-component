@@ -1,6 +1,6 @@
-# Intro (@danny-wood)
+# Intro (@inspired-agency)
 
-This is a forked version from @dmachio's [package](https://github.com/dmachio/gatsby-gravityforms-component) which is in turn a fork from the original @robmarshall's [package](https://github.com/robmarshall/gatsby-gravityforms-component).
+Modified package for Inspired Agency. Original [package](https://github.com/robmarshall/gatsby-gravityforms-component).
 
 The following changes have been made:
 
@@ -13,7 +13,7 @@ The following changes have been made:
 Env variable for postcode software
 
 ```js
-GATSBY_POSTCODE_SOFTWARE_ENDPOINT=https://www.your-domain.co.uk/postcode-endpoint
+GATSBY_POSTCODE_SOFTWARE_ENDPOINT=https://your-domain.co.uk/postcode-endpoint
 ```
 
 # Intro (@dmachio)
